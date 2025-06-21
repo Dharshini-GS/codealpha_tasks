@@ -1,0 +1,37 @@
+import random
+words = ["loop", "string", "module", "function", "variable"]
+word = random.choice(words)
+guessed = []
+tries = 6
+hidden = ["_"] * len(word)
+print("🐍 Welcome to Python Hangman!")
+print("Guess the word! You have", tries, "tries.")
+print("Word:", " ".join(hidden))
+while tries > 0 and "_" in hidden:
+    letter = input("Guess a letter: ").lower()
+
+    if not letter.isalpha() or len(letter) != 1:
+        print("Please enter just one letter.")
+        continue
+
+    if letter in guessed:
+        print("You already guessed that letter.")
+        continue
+
+    guessed.append(letter)
+
+    if letter in word:
+        print("Nice! That letter is in the word.")
+        for i in range(len(word)):
+            if word[i] == letter:
+                hidden[i] = letter
+    else:
+        tries -= 1
+        print("Oops! Wrong guess. Tries left:", tries)
+
+    print("Word:", " ".join(hidden))
+
+if "_" not in hidden:
+    print("🎉 You guessed the word:", word)
+else:
+    print("💀 You ran out of tries. The word was:", word)
